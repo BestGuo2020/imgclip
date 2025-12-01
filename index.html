@@ -626,22 +626,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script>
       (function() {
-        // 检查当前路径是否是根路径 '/'
-        if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
-          // 这里的逻辑是：如果是根路径，默认跳转到 /zh
-          // 但为了 SEO 和用户体验，更好的做法是检测浏览器语言
-          // 如果你非要强制默认为 zh，就用下面这行：
-          // window.location.replace('/zh'); 
+        // 获取当前路径
+        var path = window.location.pathname;
+        
+        // 只有在根路径 '/' 或者显式访问 '/index.html' 时才执行
+        if (path === '/' || path === '/index.html') {
           
-          // 更好的做法（检测用户浏览器语言）：
+          // 1. 检测浏览器语言
+          var lang = '/zh'; // 默认语言
           var userLang = navigator.language || navigator.userLanguage;
+          
           if (userLang.startsWith('en')) {
-             window.location.replace('/en');
+             lang = '/en';
           } else if (userLang.startsWith('ja')) {
-             window.location.replace('/ja');
-          } else {
-             window.location.replace('/zh'); // 默认兜底
+             lang = '/ja';
+          } else if (userLang.startsWith('ko')) {
+             lang = '/ko';
           }
+          window.history.replaceState(null, '', lang);
         }
       })();
     </script>
@@ -1380,3 +1382,4 @@
 </body>
 
 </html>
+
