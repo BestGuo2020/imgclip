@@ -625,6 +625,27 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script>
+      (function() {
+        // 检查当前路径是否是根路径 '/'
+        if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+          // 这里的逻辑是：如果是根路径，默认跳转到 /zh
+          // 但为了 SEO 和用户体验，更好的做法是检测浏览器语言
+          // 如果你非要强制默认为 zh，就用下面这行：
+          // window.location.replace('/zh'); 
+          
+          // 更好的做法（检测用户浏览器语言）：
+          var userLang = navigator.language || navigator.userLanguage;
+          if (userLang.startsWith('en')) {
+             window.location.replace('/en');
+          } else if (userLang.startsWith('ja')) {
+             window.location.replace('/ja');
+          } else {
+             window.location.replace('/zh'); // 默认兜底
+          }
+        }
+      })();
+    </script>
+    <script>
         // 多语言支持
         const i18n = {
             'zh-CN': {
@@ -1357,4 +1378,5 @@
     <script type='text/javascript' src='//pl28165289.effectivegatecpm.com/33/12/3b/33123b4242952694f72d6972f5716344.js'></script>
     
 </body>
+
 </html>
