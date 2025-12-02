@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-    <!-- 中文主页 -->
     <url>
         <loc>https://imgcrop.bestguo.top</loc>
         <changefreq>daily</changefreq>
@@ -10,8 +9,6 @@
         <xhtml:link rel="alternate" hreflang="ja" href="https://imgcrop.bestguo.top/ja" />
         <xhtml:link rel="alternate" hreflang="ko" href="https://imgcrop.bestguo.top/ko" />
     </url>
-    
-    <!-- 英文页面 -->
     <url>
         <loc>https://imgcrop.bestguo.top/en</loc>
         <changefreq>daily</changefreq>
@@ -21,8 +18,6 @@
         <xhtml:link rel="alternate" hreflang="ja" href="https://imgcrop.bestguo.top/ja" />
         <xhtml:link rel="alternate" hreflang="ko" href="https://imgcrop.bestguo.top/ko" />
     </url>
-    
-    <!-- 日文页面 -->
     <url>
         <loc>https://imgcrop.bestguo.top/ja</loc>
         <changefreq>daily</changefreq>
@@ -32,8 +27,6 @@
         <xhtml:link rel="alternate" hreflang="ja" href="https://imgcrop.bestguo.top/ja" />
         <xhtml:link rel="alternate" hreflang="ko" href="https://imgcrop.bestguo.top/ko" />
     </url>
-    
-    <!-- 韩文页面 -->
     <url>
         <loc>https://imgcrop.bestguo.top/ko</loc>
         <changefreq>daily</changefreq>
