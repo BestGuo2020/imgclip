@@ -637,6 +637,21 @@ function smartCrop() {
         
         // 核心检测算法
         const regions = detectRange(imageData);
+
+        // --- 新增：排序逻辑 (阅读顺序：从上到下，从左到右) ---
+        regions.sort((a, b) => {
+            // 定义垂直容差 (像素)，用于处理稍微没对齐的网格
+            // 意味着：如果两个物体顶部高度差在 15px 以内，视为同一行
+            const tolerance = 15; 
+
+            if (Math.abs(a.y - b.y) <= tolerance) {
+                // 如果在同一行，按 X 轴排序（从左到右）
+                return a.x - b.x;
+            }
+            // 否则按 Y 轴排序（从上到下）
+            return a.y - b.y;
+        });
+        // -----------------------------------------------------
         
         croppedImages = [];
         regions.forEach((region, index) => {
@@ -649,7 +664,7 @@ function smartCrop() {
             
             const dataURL = croppedCanvas.toDataURL('image/png');
             croppedImages.push({
-                id: index,
+                id: index, // 排序后的索引，保证文件名 split_1, split_2 顺序正确
                 dataURL: dataURL,
                 width: region.width,
                 height: region.height
