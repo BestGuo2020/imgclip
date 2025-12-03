@@ -4,7 +4,7 @@
 const i18n = {
     'zh-CN': {
         'nav.home': '首页', 'nav.features': '功能', 'nav.faq': '常见问题', 'nav.scene': '场景',
-        'title': '智能图片素材拆分工具',
+        'title': '智能图片素材拆分工具 - 一键将拼图切分为多个PNG文件',
         'subtitle': '一键将包含多个元素的图片自动拆分为单独的PNG文件，支持批量处理',
         
         // 演示流程
