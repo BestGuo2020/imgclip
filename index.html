@@ -192,6 +192,45 @@
             border-radius: 12px; display: none; background: #111; border: 4px solid #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         .preview-container img { max-width: 100%; display: block; margin: 0 auto; }
+        
+        /* 进度条样式 */
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        
+        .progress-bar-container {
+            width: 100%;
+            height: 12px;
+            background-color: #f0f2f5;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), #818cf8);
+            border-radius: 6px;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(79, 70, 229, 0.3);
+        }
+        
+        .spinner {
+            display: inline-block;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
 
         /* 结果区域 */
         .results-section { margin-top: 30px; display: none; border-top: 1px solid #f3f4f6; padding-top: 20px; }
@@ -367,6 +406,17 @@
                 <button class="btn btn-outline" id="manualCropBtn" disabled>🖐 手动拆分</button>
                 <button class="btn btn-outline" id="downloadAllBtn" disabled>📥 打包下载</button>
                 <button class="btn btn-outline" id="resetBtn" disabled>🔄 重置</button>
+            </div>
+
+            <!-- 进度条 -->
+            <div id="progressContainer" style="display:none; margin-top: 20px;">
+                <div class="progress-info">
+                    <span id="progressText">准备中...</span>
+                    <span id="progressPercent">0%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
             </div>
 
             <!-- 工具内广告位 (保留) -->

@@ -277,6 +277,30 @@ let cropper = null;
 let croppedImages = [];
 let currentLang = 'zh-CN';
 
+// 进度条控制函数
+function showProgress() {
+    const progressContainer = document.getElementById('progressContainer');
+    progressContainer.style.display = 'block';
+}
+
+function hideProgress() {
+    const progressContainer = document.getElementById('progressContainer');
+    progressContainer.style.display = 'none';
+}
+
+function updateProgress(percent, text) {
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const progressPercent = document.getElementById('progressPercent');
+    
+    // 确保百分比在0-100之间
+    percent = Math.max(0, Math.min(100, percent));
+    
+    progressBar.style.width = percent + '%';
+    progressText.textContent = text || `正在处理...`;
+    progressPercent.textContent = percent + '%';
+}
+
 // 路径映射
 const langToPath = { 'zh-CN': '/zh', 'en': '/en', 'ja': '/ja', 'ko': '/ko' };
 const pathToLang = { '/zh': 'zh-CN', '/en': 'en', '/ja': 'ja', '/ko': 'ko' };
@@ -649,6 +673,8 @@ function changeLanguage() {
 function smartCrop() {
     const loading = document.getElementById('loading');
     loading.style.display = 'inline-block';
+    showProgress();
+    updateProgress(0, '正在分析图像...');
     document.getElementById('cropBtn').disabled = true;
     document.getElementById('manualCropBtn').disabled = true;
     
@@ -659,13 +685,19 @@ function smartCrop() {
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         
         // 核心检测算法
+        updateProgress(20, '正在检测区域...');
         let regions = detectRange(imageData);
 
         // 使用统一的排序函数，确保与先去底再拆分功能排序一致
         regions = sortRegions(regions);
         
         croppedImages = [];
+        const totalRegions = regions.length;
+        
         regions.forEach((region, index) => {
+            const progress = 20 + Math.round((index + 1) / totalRegions * 80);
+            updateProgress(progress, `正在生成第 ${index + 1} 个素材...`);
+            
             const croppedCanvas = document.createElement('canvas');
             croppedCanvas.width = region.width;
             croppedCanvas.height = region.height;
@@ -682,8 +714,15 @@ function smartCrop() {
             });
         });
         
+        updateProgress(100, '处理完成！');
         displayResults();
-        loading.style.display = 'none';
+        
+        // 延迟隐藏进度条，让用户看到100%的状态
+        setTimeout(() => {
+            loading.style.display = 'none';
+            hideProgress();
+        }, 300);
+        
         document.getElementById('cropBtn').disabled = false;
         document.getElementById('manualCropBtn').disabled = false;
         document.getElementById('downloadAllBtn').disabled = false;
@@ -702,6 +741,8 @@ const commonBgColors = [
 async function backgroundRemove() {
     const loading = document.getElementById('loading');
     loading.style.display = 'inline-block';
+    showProgress();
+    updateProgress(0, '准备中...');
     // 禁用按钮防止重复点击
     toggleButtons(true);
     
@@ -719,22 +760,33 @@ async function backgroundRemove() {
 
         if (croppedImages.length === 0) {
             alert('请先进行智能拆分！');
+            hideProgress();
             return;
         }
         
         // 2. 批量处理图片
-        const processedImages = await Promise.all(croppedImages.map(async (img) => {
-            return processSingleImageBackground(img);
-        }));
+        const processedImages = [];
+        const totalImages = croppedImages.length;
+        
+        for (let i = 0; i < totalImages; i++) {
+            updateProgress(Math.round((i / totalImages) * 100), `正在处理第 ${i + 1} 个素材...`);
+            processedImages.push(await processSingleImageBackground(croppedImages[i]));
+        }
         
         // 3. 更新结果
+        updateProgress(100, '处理完成！');
         croppedImages = processedImages;
         displayResults();
         
     } catch (error) {
         console.error('Background removal error:', error);
+        hideProgress();
     } finally {
-        loading.style.display = 'none';
+        // 延迟隐藏进度条，让用户看到100%的状态
+        setTimeout(() => {
+            loading.style.display = 'none';
+            hideProgress();
+        }, 300);
         toggleButtons(false);
     }
 }
@@ -743,15 +795,19 @@ async function backgroundRemove() {
 async function bgRemoveThenCrop() {
     const loading = document.getElementById('loading');
     loading.style.display = 'inline-block';
+    showProgress();
+    updateProgress(0, '准备中...');
     // 禁用按钮防止重复点击
     toggleButtons(true);
     
     try {
         // 1. 获取当前预览图片
+        updateProgress(10, '正在获取图片...');
         const canvas = cropper.getCroppedCanvas();
         const imageData = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height);
         
         // 2. 对图片进行去底处理（不修改预览区域）
+        updateProgress(20, '正在创建临时画布...');
         // 创建临时画布
         const tempCanvas = document.createElement('canvas');
         tempCanvas.width = canvas.width;
@@ -762,15 +818,23 @@ async function bgRemoveThenCrop() {
         tempCtx.putImageData(imageData, 0, 0);
         
         // 3. 对临时画布进行去底处理
+        updateProgress(30, '正在检测背景色...');
         const bgColor = detectBorderBackgroundColor(imageData);
+        
+        updateProgress(40, '正在去除背景...');
         removeBackgroundFloodFill(imageData, bgColor);
+        
+        updateProgress(50, '正在净化边缘...');
         cleanEdges(imageData, bgColor, 60);
+        
+        updateProgress(60, '正在去除噪点...');
         removeSpeckles(imageData, 30);
         
         // 将去底后的图像数据放回临时画布
         tempCtx.putImageData(imageData, 0, 0);
         
         // 4. 对去底后的图片进行智能拆分
+        updateProgress(70, '正在检测区域...');
         const processedImageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
         
         // 使用智能拆分的核心检测算法，并应用统一的排序函数
@@ -778,8 +842,14 @@ async function bgRemoveThenCrop() {
         regions = sortRegions(regions);
         
         // 5. 生成拆分结果
+        updateProgress(80, '正在生成素材...');
         croppedImages = [];
+        const totalRegions = regions.length;
+        
         regions.forEach((region, index) => {
+            const progress = 80 + Math.round((index + 1) / totalRegions * 20);
+            updateProgress(progress, `正在生成第 ${index + 1} 个素材...`);
+            
             const croppedCanvas = document.createElement('canvas');
             croppedCanvas.width = region.width;
             croppedCanvas.height = region.height;
@@ -797,12 +867,18 @@ async function bgRemoveThenCrop() {
         });
         
         // 6. 显示拆分结果
+        updateProgress(100, '处理完成！');
         displayResults();
         
     } catch (error) {
         console.error('Background removal then crop error:', error);
+        hideProgress();
     } finally {
-        loading.style.display = 'none';
+        // 延迟隐藏进度条，让用户看到100%的状态
+        setTimeout(() => {
+            loading.style.display = 'none';
+            hideProgress();
+        }, 300);
         toggleButtons(false);
     }
 }
@@ -1393,12 +1469,33 @@ function deleteImage(index) {
 
 function downloadAll() {
     if (croppedImages.length === 0) return;
+    
+    showProgress();
+    updateProgress(0, '正在准备导出...');
+    
     const zip = new JSZip();
     croppedImages.forEach((img, index) => {
         const blob = base64ToBlob(img.dataURL.split(',')[1], 'image/png');
         zip.file(`split_${index + 1}.png`, blob);
     });
-    zip.generateAsync({ type: 'blob' }).then(c => saveAs(c, 'split_images.zip'));
+    
+    // 生成ZIP文件并显示进度
+    zip.generateAsync({ 
+        type: 'blob',
+        // 添加进度回调
+        onUpdate: (metadata) => {
+            // metadata.percent 是一个从 0 到 1 的小数
+            const percent = Math.round(metadata.percent * 100);
+            updateProgress(percent, `正在生成ZIP文件...`);
+        }
+    }).then(c => {
+        updateProgress(100, '导出完成！');
+        saveAs(c, 'split_images.zip');
+        // 延迟隐藏进度条，让用户看到100%的状态
+        setTimeout(() => {
+            hideProgress();
+        }, 300);
+    });
 }
 
 function base64ToBlob(base64, mime) {
