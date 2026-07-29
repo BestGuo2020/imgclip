@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://imgcrop.bestguo.top/sitemap.xml
