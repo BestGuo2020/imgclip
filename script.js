@@ -62,7 +62,7 @@ const i18n = {
         'faq.q7': '图片裁切时原素材被削减或抠没了，怎么办？',
         'faq.a7': '这种情况通常发生在使用"一键去底"功能时，尤其是当素材边缘与背景颜色相近时。建议您尝试使用"先去底再拆分"功能，该功能会先对整图进行去底处理，再进行智能拆分，能更好地保留素材的完整性和细节。',
         
-        'copyright': '© 2025 智能图片素材拆分工具. 保留所有权利.',
+        'copyright': '© 2026 智能图片素材拆分工具. 保留所有权利.',
         'alert.image': '请上传图片文件！',
 
         // 新增 Schema 翻译
@@ -130,7 +130,7 @@ const i18n = {
         'faq.q7': 'What to do if the original material is cut off or lost during cropping?',
         'faq.a7': 'This usually happens when using the "Remove Background" function, especially when the material edges are close to the background color. We recommend trying the "Remove BG Then Split" function, which first removes the background from the entire image and then performs intelligent splitting, better preserving the integrity and details of the material.',
 
-        'copyright': '© 2025 Smart Image Splitter. All Rights Reserved.',
+        'copyright': '© 2026 Smart Image Splitter. All Rights Reserved.',
         'alert.image': 'Please upload an image file!',
 
         'schema.websiteName': 'Smart Image Splitter',
@@ -198,7 +198,7 @@ const i18n = {
         'faq.q7': '画像を切り抜くと元の素材が削られたり消えたりするのはなぜですか？',
         'faq.a7': 'これは主に「背景除去」機能を使用した場合に発生し、特に素材のエッジと背景色が近い場合に顕著です。「背景除去後分割」機能をお試しください。この機能はまず全体の画像から背景を削除し、その後にスマート分割を行うため、素材の完全性と詳細をより良く保持できます。',
         
-        'copyright': '© 2025 Smart Image Splitter. All Rights Reserved.',
+        'copyright': '© 2026 Smart Image Splitter. All Rights Reserved.',
         'alert.image': '画像ファイルをアップロードしてください！',
 
         'schema.websiteName': '画像自動分割ツール',
@@ -265,7 +265,7 @@ const i18n = {
         'faq.q7': '이미지 자르기 중 원본 재료가 잘려나가거나 사라졌어요. 어떻게 해야 하나요?',
         'faq.a7': '이런 경우는 주로 "배경 제거" 기능을 사용할 때 발생하며, 특히 재료의 가장자리가 배경색과 유사할 때 더 자주 발생합니다. "배경 제거 후 분할" 기능을 사용해 보세요. 이 기능은 전체 이미지에서 먼저 배경을 제거한 후 스마트 분할을 수행하므로, 재료의 완전성과 세부 사항을 더 잘 유지할 수 있습니다.',
         
-        'copyright': '© 2025 Smart Image Splitter. All Rights Reserved.',
+        'copyright': '© 2026 Smart Image Splitter. All Rights Reserved.',
         'alert.image': '이미지 파일을 업로드해주세요!',
 
         'schema.websiteName': '스마트 이미지 분할 도구',
