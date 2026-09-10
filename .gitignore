@@ -1,18 +1,20 @@
 .trae
 
-# 渚濊禆涓庢瀯寤轰骇鐗?node_modules/
+# 依赖与构建产物
+node_modules/
 dist/
 
-# AssemblyScript 缂栬瘧鏃剁敓鎴愮殑鏂囨湰鏍煎紡锛坆uild:wasm 鐨勫壇浜х墿锛屼笉鍏ュ簱锛?wasm/imgcrop.wat
+# AssemblyScript 编译时生成的文本格式（build:wasm 的副产物，不入库）
+wasm/imgcrop.wat
 wasm/imgcrop.wasm.map
 
-# 缂栬緫鍣?/ 绯荤粺
+# 编辑器 / 系统
 .DS_Store
 Thumbs.db
 *.local
 
-# 迁移遗留：这三个文件是 src/lib 对应模块迁移前的原件，均不参与构建（现用
-# src/lib/griddetect.js 与 src/lib/imgproc.js），确认不再需要后可以直接删除。
+# 迁移遗留：下面三个文件是 src/lib 对应模块迁移前的原件，均不参与构建
+# （现用 src/lib/griddetect.js 与 src/lib/imgproc.js），确认不再需要后可直接删除。
 canvas-image.png
 grid.js
 imgproc.js
