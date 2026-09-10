@@ -26,7 +26,7 @@ src/
   analytics.js                 # Cloudflare Web Analytics（留空 token 即不加载任何第三方）
   components/                  # HeroHeader / UploadZone / ToolActions / ResultGrid / FaqSection …
   lib/                         # pipeline / imgproc / bgremove / griddetect / detect / download
-public/                        # 原样拷贝进 dist：robots.txt、sitemap.xml、_redirects、ads.txt、og.png、wasm/
+public/                        # 原样拷贝进 dist：robots.txt、sitemap.xml、_redirects、og.png、wasm/
 scripts/
   verify-wasm.mjs              # WASM 核心自检
   verify-pipeline.mjs          # 图像处理管线自检
@@ -152,10 +152,15 @@ curl.exe -s -A "Mozilla/5.0 (compatible; GPTBot/1.2; +https://openai.com/gptbot)
 
 ## 已知问题与待办
 
-- **广告与隐私主张冲突**：`src/HomePage.vue` 里通过 `AdSlot.vue` 挂了两个第三方广告脚本
+- **广告与隐私主张冲突（仍未解决）**：`src/HomePage.vue` 里通过 `AdSlot.vue` 挂了两个第三方广告脚本
   （`effectivecpmnetwork` / `highperformanceformat` 的 `invoke.js`，Adsterra 系），而页面主张是
   「图片不上传、隐私级安全」。这类网络的素材质量不可控（假下载按钮之类），放在一个让用户下载文件的工具站上
-  既不诚信也有安全/账号风险；`public/ads.txt` 里声明的却是 Google AdSense。出海前建议二选一。
+  既不诚信也有安全/账号风险。只有两个干净的选择：撤掉这两个脚本，或者按 `video-frame-extractor` 的做法
+  把隐私文案改成「永远可验证为真」的版本（页脚只留本地处理与不上传，数据边界写进 FAQ）。
+- **`ads.txt` 已删除**：它此前声明了 Google 的卖方 ID（`google.com, pub-857642…`），但本站从未接入 AdSense。
+  ads.txt 是「授权卖方」声明，写着并不存在的关系只会误导买方与审核方；Adsterra 系并不要求 ads.txt。
+  将来真的接入 AdSense / AdX 时再加回来。删除后 `/ads.txt` 会走 Pages 的 SPA 回退返回 HTML ——
+  对读取方而言无效格式等同于「无授权卖方」，没有副作用。
 - **英文浏览器访问根路径会被前端改写到 `/en`**：`main.js` 在根路径会按 `navigator.language` 归一化语言，
   英文环境的 Googlebot 渲染时可能跟着跳到 `/en`，与「根路径 = 中文 canonical」略有张力。观察 Search Console
   的收录情况，若根路径收录异常，就改成只在用户手动切换时才改地址。
