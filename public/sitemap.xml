@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  四个语言的 URL 必须与 index.html 的 hreflang 完全一致（包括根路径结尾的 /）。
+  中文的 canonical 是根路径，英文是 x-default —— 非中日韩用户落到英文页，这是出海要抢的流量。
+  改域名时必须一起改的四处：index.html、public/robots.txt、public/sitemap.xml、src/seo-pages.js
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <url>
+        <loc>https://imgcrop.guoguo-labs.online/</loc>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="zh-CN" href="https://imgcrop.guoguo-labs.online/" />
+        <xhtml:link rel="alternate" hreflang="en" href="https://imgcrop.guoguo-labs.online/en" />
+        <xhtml:link rel="alternate" hreflang="ja" href="https://imgcrop.guoguo-labs.online/ja" />
+        <xhtml:link rel="alternate" hreflang="ko" href="https://imgcrop.guoguo-labs.online/ko" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://imgcrop.guoguo-labs.online/en" />
+    </url>
+    <url>
+        <loc>https://imgcrop.guoguo-labs.online/en</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="zh-CN" href="https://imgcrop.guoguo-labs.online/" />
+        <xhtml:link rel="alternate" hreflang="en" href="https://imgcrop.guoguo-labs.online/en" />
+        <xhtml:link rel="alternate" hreflang="ja" href="https://imgcrop.guoguo-labs.online/ja" />
+        <xhtml:link rel="alternate" hreflang="ko" href="https://imgcrop.guoguo-labs.online/ko" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://imgcrop.guoguo-labs.online/en" />
+    </url>
+    <url>
+        <loc>https://imgcrop.guoguo-labs.online/ja</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="zh-CN" href="https://imgcrop.guoguo-labs.online/" />
+        <xhtml:link rel="alternate" hreflang="en" href="https://imgcrop.guoguo-labs.online/en" />
+        <xhtml:link rel="alternate" hreflang="ja" href="https://imgcrop.guoguo-labs.online/ja" />
+        <xhtml:link rel="alternate" hreflang="ko" href="https://imgcrop.guoguo-labs.online/ko" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://imgcrop.guoguo-labs.online/en" />
+    </url>
+    <url>
+        <loc>https://imgcrop.guoguo-labs.online/ko</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="zh-CN" href="https://imgcrop.guoguo-labs.online/" />
+        <xhtml:link rel="alternate" hreflang="en" href="https://imgcrop.guoguo-labs.online/en" />
+        <xhtml:link rel="alternate" hreflang="ja" href="https://imgcrop.guoguo-labs.online/ja" />
+        <xhtml:link rel="alternate" hreflang="ko" href="https://imgcrop.guoguo-labs.online/ko" />
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://imgcrop.guoguo-labs.online/en" />
+    </url>
+</urlset>

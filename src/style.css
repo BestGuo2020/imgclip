@@ -1,0 +1,97 @@
+/* src/style.css — imgcrop 全局样式
+ *
+ * 只放「与组件无关」的全局规则：页面底色、字体、标题渐变、
+ * cropper.js 的容器修正，以及首屏静态回退内容的样式。
+ * 组件自身的样式都写在各自的 <style scoped> 里。
+ */
+
+:root {
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  --text-main: #1f2937;
+  --text-light: #6b7280;
+  --success: #10b981;
+  --shadow-lg: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--text-main);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 标题渐变字（迁移前的 -webkit-background-clip 方案，保留原视觉） */
+.page-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0 0 12px;
+  background: linear-gradient(45deg, var(--primary), #818cf8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: var(--primary); /* 不支持 background-clip 时的兜底 */
+  line-height: 1.25;
+}
+
+/* cropper.js：让画布填满预览容器，并隐藏自带的网格背景 */
+.crop-stage {
+  margin-top: 30px;
+  max-height: 600px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #111;
+  border: 4px solid #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.crop-stage img {
+  display: block;
+  max-width: 100%;
+}
+
+/*
+ * 首屏静态回退内容（index.html 里 #app 内部的 SEO 正文）。
+ * Vue 挂载后会用组件替换掉这些节点，样式随之失效，因此这里只做「挂载前不闪烁/不跑版」的最低限度处理。
+ */
+.static-fallback {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.static-fallback h1,
+.static-fallback h2,
+.static-fallback h3 {
+  color: var(--text-main);
+}
+
+.static-fallback p,
+.static-fallback li {
+  color: var(--text-light);
+}
+
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 1.8rem;
+  }
+}

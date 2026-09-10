@@ -1,0 +1,33 @@
+{
+  "name": "imgcrop",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.7.0",
+  "description": "ImgCrop 在线图片素材拆分工具 —— Vue 3 + Naive UI 前端，AssemblyScript / WebAssembly 图像处理核心",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "node scripts/verify-i18n.mjs && vite build && node scripts/prerender.mjs && node scripts/verify-prerender.mjs",
+    "prerender": "node scripts/prerender.mjs && node scripts/verify-prerender.mjs",
+    "verify:i18n": "node scripts/verify-i18n.mjs",
+    "preview": "vite preview",
+    "selftest": "node scripts/verify-wasm.mjs && node scripts/verify-pipeline.mjs && node scripts/verify-seo.mjs",
+    "build:wasm": "asc wasm/assembly/index.ts --outFile public/wasm/imgcrop.wasm --textFile wasm/imgcrop.wat --exportRuntime -O3",
+    "build:wasm:debug": "asc wasm/assembly/index.ts --outFile public/wasm/imgcrop.wasm --textFile wasm/imgcrop.wat --exportRuntime --sourceMap"
+  },
+  "dependencies": {
+    "cropperjs": "^1.6.2",
+    "file-saver": "^2.0.5",
+    "jszip": "^3.10.1",
+    "naive-ui": "^2.45.3",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.0",
+    "assemblyscript": "^0.27.0",
+    "vite": "^7.0.4"
+  }
+}

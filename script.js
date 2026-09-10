@@ -19,7 +19,8 @@ const i18n = {
 
         // 按钮
         'btn.smartCrop': '⚡ 智能拆分', 
-        'btn.manualCrop': '🖐 手动拆分', 
+        'btn.manualCrop': '🖐 手动拆分',
+        'btn.gridSplit': '🔲 网格拆分', 
         'btn.reset': '🔄 重置', 
         'btn.downloadAll': '📥 打包下载',
         'btn.bgRemove': '一键去底',
@@ -91,7 +92,8 @@ const i18n = {
         'privacy.badge': '🔒 Local processing, images not uploaded',
 
         'btn.smartCrop': '⚡ Smart Split', 
-        'btn.manualCrop': '🖐 Manual Split', 
+        'btn.manualCrop': '🖐 Manual Split',
+        'btn.gridSplit': '🔲 Grid Split', 
         'btn.reset': '🔄 Reset', 
         'btn.downloadAll': '📥 Download All',
         'btn.bgRemove': 'Remove Background',
@@ -159,7 +161,8 @@ const i18n = {
         'privacy.badge': '🔒 ローカル処理、サーバーへのアップロードなし',
 
         'btn.smartCrop': '⚡ スマート分割', 
-        'btn.manualCrop': '🖐 手動分割', 
+        'btn.manualCrop': '🖐 手動分割',
+        'btn.gridSplit': '🔲 グリッド分割', 
         'btn.reset': '🔄 リセット', 
         'btn.downloadAll': '📥 一括DL',
         'btn.bgRemove': '背景除去',
@@ -226,7 +229,8 @@ const i18n = {
         'privacy.badge': '🔒 로컬 처리, 서버 업로드 없음',
 
         'btn.smartCrop': '⚡ 스마트 분할', 
-        'btn.manualCrop': '🖐 수동 분할', 
+        'btn.manualCrop': '🖐 수동 분할',
+        'btn.gridSplit': '🔲 그리드 분할', 
         'btn.reset': '🔄 초기화', 
         'btn.downloadAll': '📥 전체 다운로드',
         'btn.bgRemove': '배경 제거',
@@ -434,6 +438,7 @@ function handleFile(file) {
         // 启用按钮
         document.getElementById('cropBtn').disabled = false;
         document.getElementById('manualCropBtn').disabled = false;
+        document.getElementById('gridSplitBtn').disabled = false;
         document.getElementById('resetBtn').disabled = false;
         
         // 隐藏上传提示，只留图
@@ -546,6 +551,7 @@ function applyI18n() {
     const btns = {
         'cropBtn': 'btn.smartCrop',
         'manualCropBtn': 'btn.manualCrop',
+        'gridSplitBtn': 'btn.gridSplit',
         'resetBtn': 'btn.reset',
         'downloadAllBtn': 'btn.downloadAll',
         'bgRemoveBtn': 'btn.bgRemove',
@@ -894,7 +900,7 @@ async function bgRemoveThenCrop() {
 
 // 辅助函数：切换按钮状态
 function toggleButtons(disabled) {
-    const ids = ['cropBtn', 'manualCropBtn', 'downloadAllBtn'];
+    const ids = ['cropBtn', 'manualCropBtn', 'gridSplitBtn', 'downloadAllBtn'];
     ids.forEach(id => {
         const el = document.getElementById(id);
         if(el) el.disabled = disabled;
@@ -1536,6 +1542,7 @@ function reset() {
 
     document.getElementById('cropBtn').disabled = true;
     document.getElementById('manualCropBtn').disabled = true;
+    document.getElementById('gridSplitBtn').disabled = true;
     document.getElementById('resetBtn').disabled = true;
     document.getElementById('downloadAllBtn').disabled = true;
     

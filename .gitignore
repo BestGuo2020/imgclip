@@ -1,1 +1,14 @@
 .trae
+
+# 依赖与构建产物
+node_modules/
+dist/
+
+# AssemblyScript 编译时生成的文本格式（build:wasm 的副产物，不入库）
+wasm/imgcrop.wat
+wasm/imgcrop.wasm.map
+
+# 编辑器 / 系统
+.DS_Store
+Thumbs.db
+*.local

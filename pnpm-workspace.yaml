@@ -1,0 +1,15 @@
+# pnpm 11 把「是否允许依赖执行安装脚本」等配置放在这里。
+#
+# allowBuilds.esbuild = false：
+#   esbuild 的平台二进制由可选依赖 @esbuild/win32-x64 提供，包自带的安装脚本只是
+#   「可选依赖缺失时兜底下载」；本项目在跳过该脚本的情况下已能正常构建（vite build 实测通过），
+#   因此显式设为 false：既表明这是有意为之，也避免每次 install 都以
+#   ERR_PNPM_IGNORED_BUILDS 退出码 1 结束（会让 CI 误判为失败）。
+#
+# confirmModulesPurge = false：
+#   本文件的配置变化会让 pnpm 要求清空 node_modules 重建，而该确认在非 TTY 环境下无法应答，
+#   会直接以 ERR_PNPM_ABORTED_REMOVE_MODULES_DIR_NO_TTY 失败。
+#   Cloudflare Pages 的构建就是非 TTY，所以必须关掉这个交互确认。
+allowBuilds:
+  esbuild: false
+confirmModulesPurge: false

@@ -1,0 +1,31 @@
+# Cloudflare Pages 重定向规则
+#
+# 为什么这里没有 `/*  /index.html  200`（原来有，已删除）：
+#   1. 它是多余的。Pages 在没有顶层 404.html 时**自带 SPA 回退** ——
+#      官方文档 Serving Pages → Single-page application rendering：
+#      「If your project does not include a top-level 404.html file, Pages assumes that you
+#        are deploying a single-page application... default single-page application behavior
+#        matches all incoming paths to the root (/)」。
+#      本项目 public/ 下没有 404.html，所以删掉这条规则后深链依然会回落到根页。
+#   2. 它是危险的。Redirects 文档明确写着「Redirects are always followed, regardless of
+#      whether or not an asset matches the incoming request」。一旦这条 catch-all 生效，
+#      `/assets/index-xxxx.js`、`/robots.txt`、`/og.png` 都可能被改写成 index.html ——
+#      而本站刚刚移除了 public/_worker.js（边缘改写退役），不再有 Function 帮我们挡住它。
+#
+# 保留语言规则的原因：Redirects 文档说「If an HTML file is found with a matching path to the
+# current route requested, Pages will serve it」，正常情况下 /en 会命中 dist/en/index.html；
+# 但显式列出可以让三种语言的路由与 sitemap、hreflang 完全对齐，不依赖隐式行为。
+# 规则顺序：同源规则取最上面那条，所以精确路径写在子路径之前。
+# `/*` 不匹配 `/en` 本身，因此每种语言都要「精确路径 + 子路径」两条。
+#
+# 改语言集合时，这里要与 index.html 的 hreflang、public/sitemap.xml、src/seo-pages.js 一起改。
+
+/en    /en/index.html    200
+/en/*  /en/index.html    200
+/ja    /ja/index.html    200
+/ja/*  /ja/index.html    200
+/ko    /ko/index.html    200
+/ko/*  /ko/index.html    200
+
+# /zh 是历史链接：中文的 canonical 是根路径，这里把它指向中文壳，旧链接保持可用
+/zh    /index.html       200
